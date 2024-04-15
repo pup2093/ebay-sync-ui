@@ -1,0 +1,187 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+$dark-primary-text: rgba(black, 0.87);
+$light-primary-text: white;
+$ebay-sync-ui-blue-palette: (
+  50: #e0ecfa,
+  100: #b3d1f2,
+  200: #80b2e9,
+  300: #4d93e0,
+  400: #267bd9,
+  500: #0064d2,
+  600: #005ccd,
+  700: #0052c7,
+  800: #0048c1,
+  900: #0036b6,
+  A100: #dfe6ff,
+  A200: #acbfff,
+  A400: #7997ff,
+  A700: #5f83ff,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  ),
+);
+
+$ebay-sync-ui-yellow-palette: (
+  50: #fef5e1,
+  100: #fce7b3,
+  200: #fad781,
+  300: #f8c74e,
+  400: #f7bb28,
+  500: #f5af02,
+  600: #f4a802,
+  700: #f29f01,
+  800: #f09601,
+  900: #ee8601,
+  A100: #ffffff,
+  A200: #fff0e1,
+  A400: #ffd7ae,
+  A700: #ffcb95,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $dark-primary-text,
+    600: $dark-primary-text,
+    700: $dark-primary-text,
+    800: $dark-primary-text,
+    900: $dark-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: $dark-primary-text,
+  ),
+);
+
+$ebay-sync-ui-green-palette: (
+  50: #f0f6e3,
+  100: #dbeab9,
+  200: #c3dc8b,
+  300: #aacd5d,
+  400: #98c33a,
+  500: #86b817,
+  600: #7eb114,
+  700: #73a811,
+  800: #69a00d,
+  900: #569107,
+  A100: #e0ffbe,
+  A200: #c8ff8b,
+  A400: #b0ff58,
+  A700: #a3ff3f,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $dark-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: $dark-primary-text,
+  ),
+);
+
+$ebay-sync-ui-red-palette: (
+  50: #fce6e7,
+  100: #f7c2c3,
+  200: #f2999c,
+  300: #ed7074,
+  400: #e95156,
+  500: #e53238,
+  600: #e22d32,
+  700: #de262b,
+  800: #da1f24,
+  900: #d31317,
+  A100: #ffffff,
+  A200: #ffcfd0,
+  A400: #ff9c9e,
+  A700: #ff8385,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  ),
+);
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$ebay-sync-ui-primary: mat.define-palette($ebay-sync-ui-blue-palette, 500);
+$ebay-sync-ui-accent: mat.define-palette(
+  $ebay-sync-ui-yellow-palette,
+  500,
+  A100,
+  A400
+);
+
+// The warn palette is optional (defaults to red).
+$ebay-sync-ui-warn: mat.define-palette($ebay-sync-ui-red-palette, 500);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$ebay-sync-ui-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $ebay-sync-ui-primary,
+      accent: $ebay-sync-ui-accent,
+      warn: $ebay-sync-ui-warn,
+    ),
+    typography: mat.define-typography-config(),
+    density: 0,
+  )
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($ebay-sync-ui-theme);
+
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}

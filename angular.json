@@ -3,5 +3,122 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
+    "ebay-sync-ui": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "standalone": true,
+          "style": "scss",
+          "displayBlock": true,
+          "skipTests": false
+        }
+      },
+      "root": "projects/ebay-sync-ui",
+      "sourceRoot": "projects/ebay-sync-ui/src",
+      "prefix": "esync",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist/ebay-sync-ui",
+            "index": "projects/ebay-sync-ui/src/index.html",
+            "browser": "projects/ebay-sync-ui/src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "projects/ebay-sync-ui/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/ebay-sync-ui/src/favicon.ico",
+              "projects/ebay-sync-ui/src/assets"
+            ],
+            "styles": [
+              "projects/ebay-sync-ui/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "750kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "projects/ebay-sync-ui/src/environments/environment.ts",
+                  "with": "projects/ebay-sync-ui/src/environments/environment.development.ts"
+                }
+              ]
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "ebay-sync-ui:build:production"
+            },
+            "development": {
+              "buildTarget": "ebay-sync-ui:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "buildTarget": "ebay-sync-ui:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "projects/ebay-sync-ui/tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/ebay-sync-ui/src/favicon.ico",
+              "projects/ebay-sync-ui/src/assets"
+            ],
+            "styles": [
+              "projects/ebay-sync-ui/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/ebay-sync-ui/**/*.ts",
+              "projects/ebay-sync-ui/**/*.html"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }
