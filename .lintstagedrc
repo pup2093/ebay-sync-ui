@@ -1,0 +1,3 @@
+{
+    "./projects/**/*.{ts,html,scss,json}": ["eslint", "prettier --write"]
+}
