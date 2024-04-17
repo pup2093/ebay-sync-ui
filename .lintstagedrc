@@ -1,4 +1,4 @@
 {
-    "./projects/**/*.{ts}": "eslint",
+    "./projects/**/*.ts": "eslint",
     "./projects/**/*.{ts,html,scss,json}": "prettier --write"
 }
