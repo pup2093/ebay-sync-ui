@@ -1,1 +1,11 @@
-<mat-toolbar color="primary"> <p>eBaySync</p> </mat-toolbar>
+<mat-toolbar color="primary">
+  <span class="nav-logo-spacer"></span>
+  <span style="font-size: larger">Ebay Sync by Neutroware</span>
+  <span class="nav-logo-spacer"></span>
+  <button mat-button matTooltip="Logout" class="nav-item">
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>
+<div class="content-container">
+  <router-outlet></router-outlet>
+</div>
