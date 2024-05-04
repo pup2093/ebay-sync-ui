@@ -12,29 +12,29 @@ import { MatTableModule } from '@angular/material/table';
 export class ActivityLogComponent {
   dataSource = [
     {
-      direction: 'ebay \u{2192} shopify',
+      direction: 'Ebay \u{2192} Shopify',
       change: 'Imported 12 products',
-      date: new Date().toDateString(),
+      date: new Date().toLocaleDateString(),
     },
     {
-      direction: 'ebay \u{2192} shopify',
+      direction: 'Ebay \u{2192} Shopify',
       change: 'Imported 12 products',
-      date: new Date().toDateString(),
+      date: new Date().toLocaleDateString(),
     },
     {
-      direction: 'ebay \u{2192} shopify',
+      direction: 'Ebay \u{2192} Shopify',
       change: 'Imported 12 products',
-      date: new Date().toDateString(),
+      date: new Date().toLocaleDateString(),
     },
     {
-      direction: 'ebay \u{2192} shopify',
+      direction: 'Ebay \u{2192} Shopify',
       change: 'Imported 12 products',
-      date: new Date().toDateString(),
+      date: new Date().toLocaleDateString(),
     },
     {
-      direction: 'ebay \u{2192} shopify',
+      direction: 'Ebay \u{2192} Shopify',
       change: 'Imported 12 products',
-      date: new Date().toDateString(),
+      date: new Date().toLocaleDateString(),
     },
   ];
   displayedColumns: string[] = ['direction', 'change', 'date'];
