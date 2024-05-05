@@ -10,5 +10,6 @@
         "angular-page": {
             "skipChangeDetectionOnPush": true
         }
-    }
+    },
+    "editor.tabSize": 2
 }

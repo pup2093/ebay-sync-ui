@@ -6,8 +6,11 @@ import {
   withInMemoryScrolling,
   withRouterConfig,
 } from '@angular/router';
-import { ENVIRONMENT_INITIALIZER } from '@angular/core';
+import { APP_INITIALIZER } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideHttpClient } from '@angular/common/http';
+import { OAuthService, provideOAuthClient } from 'angular-oauth2-oidc';
+import { initializeOauth } from './auth/auth.config';
 
 export interface CoreOptions {
   routes: Routes;
@@ -28,18 +31,22 @@ export function provideCore({ routes }: CoreOptions) {
         scrollPositionRestoration: 'enabled',
       }),
     ),
-
+    provideHttpClient(),
     // other 3rd party libraries providers like NgRx, provideStore()
-
+    provideOAuthClient(),
     // other application specific providers and setup
 
     // perform initialization, has to be last
     {
-      provide: ENVIRONMENT_INITIALIZER,
+      provide: APP_INITIALIZER,
       multi: true,
-      useValue() {
-        // add init logic here...
-        // kickstart processes, trigger initial requests or actions, ...
+      deps: [OAuthService],
+      useFactory: (oauthService: OAuthService) => {
+        return () => {
+          // important to return promise here. reject() will prevent app loading,
+          // so should reject when no valid token is found
+          return initializeOauth(oauthService);
+        };
       },
     },
   ];
