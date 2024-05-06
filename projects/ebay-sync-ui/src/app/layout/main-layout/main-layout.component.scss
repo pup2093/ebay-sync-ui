@@ -4,10 +4,14 @@
 
 .mat-toolbar {
   padding-right: 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .content-container {
   margin: 20px;
+  height: 100vh;
 }
 
 .nav-logo-spacer {
@@ -25,4 +29,23 @@
   &:hover {
     background-color: rgba(255, 255, 255, 0.237);
   }
+}
+
+.mat-icon {
+  vertical-align: middle;
+}
+
+.mat-drawer {
+  position: fixed;
+  left: 0;
+  // width of toolbar (64) - some offset
+  top: 56px;
+}
+
+.active-link {
+  background-color: rgba(0, 0, 0, 0.168);
+}
+
+:host ::ng-deep .mat-mdc-nav-list .mat-mdc-list-item {
+  border-radius: 0px;
 }

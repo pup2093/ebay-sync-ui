@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { DashboardComponent } from './dashboard.component';
+import { SyncComponent } from './sync.component';
 
 export default <Routes>[
   {
@@ -8,7 +8,7 @@ export default <Routes>[
     children: [
       {
         path: '',
-        component: DashboardComponent,
+        component: SyncComponent,
         providers: [],
       },
     ],

@@ -43,7 +43,7 @@ export function provideCore({ routes }: CoreOptions) {
       deps: [OAuthService],
       useFactory: (oauthService: OAuthService) => {
         return () => {
-          // important to return promise here. reject() will prevent app loading,
+          // must return promise here to make blocking. reject() will prevent app loading,
           // so should reject when no valid token is found
           return initializeOauth(oauthService);
         };

@@ -1,11 +1,43 @@
 <mat-toolbar color="primary">
+  <button mat-icon-button (click)="drawer.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
   <span class="nav-logo-spacer"></span>
   <span style="font-size: larger">Ebay Sync by Neutroware</span>
   <span class="nav-logo-spacer"></span>
-  <button (click)="logout()" mat-button matTooltip="Logout" class="nav-item">
+  <button mat-icon-button>
     <mat-icon>logout</mat-icon>
   </button>
 </mat-toolbar>
-<div class="content-container">
-  <router-outlet></router-outlet>
-</div>
+<mat-drawer-container>
+  <mat-drawer #drawer mode="over" [autoFocus]="false">
+    <mat-nav-list>
+      <a
+        mat-list-item
+        [routerLinkActive]="'active-link'"
+        [routerLink]="['/sync']"
+        (click)="drawer.toggle()"
+        ><mat-icon>sync</mat-icon> Sync Settings</a
+      >
+      <a
+        mat-list-item
+        [routerLinkActive]="'active-link'"
+        [routerLink]="['/product-list']"
+        (click)="drawer.toggle()"
+      >
+        <mat-icon>warehouse</mat-icon> Products</a
+      >
+      <a
+        mat-list-item
+        [routerLinkActive]="'active-link'"
+        [activated]="false"
+        [routerLink]="['/event-log']"
+        (click)="drawer.toggle()"
+        ><mat-icon>monitor_heart</mat-icon> Event Log</a
+      >
+    </mat-nav-list>
+  </mat-drawer>
+  <div class="content-container">
+    <router-outlet></router-outlet>
+  </div>
+</mat-drawer-container>

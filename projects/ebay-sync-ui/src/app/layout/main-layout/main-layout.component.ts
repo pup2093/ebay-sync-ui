@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 import { OAuthService } from 'angular-oauth2-oidc';
 @Component({
   selector: 'esync-main-layout',
@@ -14,6 +16,10 @@ import { OAuthService } from 'angular-oauth2-oidc';
     MatIconModule,
     MatButtonModule,
     MatTooltipModule,
+    MatSidenavModule,
+    MatListModule,
+    RouterLink,
+    RouterLinkActive,
   ],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.scss',
