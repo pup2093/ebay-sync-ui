@@ -1,17 +1,43 @@
+@use '@angular/material' as mat;
 :host {
   display: block;
 }
 
-:host
-  ::ng-deep
-  .mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked:not(.mat-disabled)
-  .mdc-switch__shadow {
-  background-color: green;
+// :host
+//   ::ng-deep
+//   .mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked:not(.mat-disabled)
+//   .mdc-switch__shadow {
+//   background-color: green;
+// }
+
+// :host
+//   ::ng-deep
+//   .mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked:not(.mat-disabled)
+//   .mdc-switch__track::after {
+//   background-color: rgb(130, 237, 130) !important;
+// }
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  margin-top: 20px;
 }
 
-:host
-  ::ng-deep
-  .mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked:not(.mat-disabled)
-  .mdc-switch__track::after {
-  background-color: rgb(130, 237, 130) !important;
+.input-field {
+  position: relative;
+  width: 180px;
+  left: 50px;
+}
+
+.input-field-dense {
+  @include mat.all-component-densities(-10);
+}
+
+.buttons {
+  margin-top: 10px;
+
+  button {
+    margin-right: 10px;
+  }
 }

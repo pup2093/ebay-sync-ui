@@ -12,7 +12,7 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $ebay-sync-ui-primary: mat.define-palette(mat.$gray-palette, 900);
-$ebay-sync-ui-accent: mat.define-palette(mat.$blue-gray-palette);
+$ebay-sync-ui-accent: mat.define-palette(mat.$green-palette);
 
 // The warn palette is optional (defaults to red).
 $ebay-sync-ui-warn: mat.define-palette(mat.$red-palette);

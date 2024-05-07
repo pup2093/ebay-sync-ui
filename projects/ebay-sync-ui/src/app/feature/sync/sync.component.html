@@ -1,5 +1,55 @@
-<esync-card cardTitle="Sync" cardIcon="sync">
-  <mat-slide-toggle (toggleChange)="toggleChange()">
-    {{ toggleText }}
-  </mat-slide-toggle>
+<esync-card cardTitle="Sync Settings" cardIcon="sync">
+  <div class="settings">
+    <mat-slide-toggle (toggleChange)="toggleChange()" [disabled]="readOnly">
+      {{ toggleText }}
+    </mat-slide-toggle>
+    <mat-checkbox #markup color="accent" [disabled]="readOnly"
+      >Mark up price</mat-checkbox
+    >
+    @if (markup.checked) {
+      <mat-form-field
+        class="input-field input-field-dense"
+        appearance="outline"
+      >
+        <mat-label>Enter markup</mat-label>
+        <input matInput [disabled]="readOnly" />
+        <mat-icon matSuffix>percent</mat-icon>
+      </mat-form-field>
+    }
+    <mat-checkbox #markdown color="accent" [disabled]="readOnly"
+      >Mark down price</mat-checkbox
+    >
+    @if (markdown.checked) {
+      <mat-form-field
+        class="input-field input-field-dense"
+        appearance="outline"
+      >
+        <mat-label>Enter markdown</mat-label>
+        <input matInput [disabled]="readOnly" />
+        <mat-icon matSuffix>percent</mat-icon>
+      </mat-form-field>
+    }
+    <mat-checkbox color="accent" [disabled]="readOnly"
+      >Add products to shopify when a new products are listed on
+      ebay</mat-checkbox
+    >
+    <mat-checkbox color="accent" [disabled]="readOnly"
+      >Delete products when out of stock</mat-checkbox
+    >
+    <mat-checkbox color="accent" [disabled]="readOnly"
+      >Publish products</mat-checkbox
+    >
+  </div>
+  <div class="buttons">
+    @if (readOnly) {
+      <button mat-raised-button color="primary" (click)="readOnly = false">
+        Edit
+      </button>
+    } @else {
+      <button mat-raised-button color="primary" (click)="readOnly = true">
+        Save
+      </button>
+      <button mat-raised-button (click)="readOnly = true">Cancel</button>
+    }
+  </div>
 </esync-card>
