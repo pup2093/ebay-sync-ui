@@ -1,10 +1,10 @@
 <esync-card cardTitle="Sync Settings" cardIcon="sync">
-  <div class="settings">
-    <mat-slide-toggle (toggleChange)="toggleChange()" [disabled]="readOnly">
+  <form [formGroup]="settingsForm" class="settings">
+    <esync-slide-toggle-control formControlName="sync">
       {{ toggleText }}
-    </mat-slide-toggle>
-    <mat-checkbox #markup color="accent" [disabled]="readOnly"
-      >Mark up price</mat-checkbox
+    </esync-slide-toggle-control>
+    <esync-checkbox-control #markup formControlName="hasMarkup">
+      Mark up price</esync-checkbox-control
     >
     @if (markup.checked) {
       <mat-form-field
@@ -12,12 +12,12 @@
         appearance="outline"
       >
         <mat-label>Enter markup</mat-label>
-        <input matInput [disabled]="readOnly" />
+        <input formControlName="markupPercent" matInput />
         <mat-icon matSuffix>percent</mat-icon>
       </mat-form-field>
     }
-    <mat-checkbox #markdown color="accent" [disabled]="readOnly"
-      >Mark down price</mat-checkbox
+    <esync-checkbox-control #markdown formControlName="hasMarkdown">
+      Mark down price</esync-checkbox-control
     >
     @if (markdown.checked) {
       <mat-form-field
@@ -25,31 +25,21 @@
         appearance="outline"
       >
         <mat-label>Enter markdown</mat-label>
-        <input matInput [disabled]="readOnly" />
+        <input formControlName="markdownPercent" matInput />
         <mat-icon matSuffix>percent</mat-icon>
       </mat-form-field>
     }
-    <mat-checkbox color="accent" [disabled]="readOnly"
-      >Add products to shopify when a new products are listed on
-      ebay</mat-checkbox
-    >
-    <mat-checkbox color="accent" [disabled]="readOnly"
-      >Delete products when out of stock</mat-checkbox
-    >
-    <mat-checkbox color="accent" [disabled]="readOnly"
-      >Publish products</mat-checkbox
-    >
-  </div>
+  </form>
   <div class="buttons">
-    @if (readOnly) {
-      <button mat-raised-button color="primary" (click)="readOnly = false">
+    @if (settingsForm.disabled) {
+      <button mat-raised-button color="primary" (click)="settingsForm.enable()">
         Edit
       </button>
     } @else {
-      <button mat-raised-button color="primary" (click)="readOnly = true">
+      <button mat-raised-button color="primary" (click)="saveSettings()">
         Save
       </button>
-      <button mat-raised-button (click)="readOnly = true">Cancel</button>
+      <button mat-raised-button (click)="settingsForm.disable()">Cancel</button>
     }
   </div>
 </esync-card>
