@@ -42,9 +42,9 @@ export class SyncComponent implements OnInit {
   ngOnInit(): void {
     this.settingsForm = this.fb.group({
       sync: new FormControl(),
-      hasMarkup: new FormControl(),
+      applyMarkup: new FormControl(),
       markupPercent: new FormControl(), //add validator required
-      hasMarkdown: new FormControl(),
+      applyMarkdown: new FormControl(),
       markdownPercent: new FormControl(),
     });
     this.settingsForm.disable();

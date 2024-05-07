@@ -3,7 +3,7 @@
     <esync-slide-toggle-control formControlName="sync">
       {{ toggleText }}
     </esync-slide-toggle-control>
-    <esync-checkbox-control #markup formControlName="hasMarkup">
+    <esync-checkbox-control #markup formControlName="applyMarkup">
       Mark up price</esync-checkbox-control
     >
     @if (markup.checked) {
@@ -16,7 +16,7 @@
         <mat-icon matSuffix>percent</mat-icon>
       </mat-form-field>
     }
-    <esync-checkbox-control #markdown formControlName="hasMarkdown">
+    <esync-checkbox-control #markdown formControlName="applyMarkdown">
       Mark down price</esync-checkbox-control
     >
     @if (markdown.checked) {
