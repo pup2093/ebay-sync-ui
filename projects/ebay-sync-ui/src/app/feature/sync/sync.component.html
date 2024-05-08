@@ -11,9 +11,8 @@
         class="input-field input-field-dense"
         appearance="outline"
       >
-        <mat-label>Enter markup</mat-label>
         <input formControlName="markupPercent" matInput />
-        <mat-icon matSuffix>percent</mat-icon>
+        <span matTextSuffix>%</span>
       </mat-form-field>
     }
     <esync-checkbox-control #markdown formControlName="applyMarkdown">
@@ -24,9 +23,8 @@
         class="input-field input-field-dense"
         appearance="outline"
       >
-        <mat-label>Enter markdown</mat-label>
         <input formControlName="markdownPercent" matInput />
-        <mat-icon matSuffix>percent</mat-icon>
+        <span matTextSuffix>%</span>
       </mat-form-field>
     }
   </form>
