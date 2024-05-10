@@ -21,11 +21,9 @@ export class AppComponent {
   ) {}
 
   //sample api call with bearer token
-  // getProduct() {
-  //   this.http.get<unknown>('http://localhost:8080/api/v1/product/1', {
-  //     headers: {
-  //       'Authorization': `Bearer ${this.oauthService.getAccessToken()}`
-  //     }
-  //   }).subscribe((val) => this.product = val );
-  // }
+  getProduct() {
+    this.http
+      .get<unknown>('http://localhost:8080/api/v1/userprofile')
+      .subscribe((val) => (this.product = val));
+  }
 }

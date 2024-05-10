@@ -8,9 +8,10 @@ import {
 } from '@angular/router';
 import { APP_INITIALIZER } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { OAuthService, provideOAuthClient } from 'angular-oauth2-oidc';
-import { initializeOauth } from './auth/auth.config';
+import { initializeOauth } from './auth.config';
+import { authInterceptor } from './interceptor/auth.interceptor';
 
 export interface CoreOptions {
   routes: Routes;
@@ -31,7 +32,7 @@ export function provideCore({ routes }: CoreOptions) {
         scrollPositionRestoration: 'enabled',
       }),
     ),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor])),
     // other 3rd party libraries providers like NgRx, provideStore()
     provideOAuthClient(),
     // other application specific providers and setup
