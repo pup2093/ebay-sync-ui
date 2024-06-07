@@ -12,7 +12,11 @@ import {
 } from '@angular/forms';
 import { CheckboxControlComponent } from '../../ui/checkbox-control/checkbox-control.component';
 import { SlideToggleControlComponent } from '../../ui/slide-toggle-control/slide-toggle-control.component';
-import { Subscription } from 'rxjs';
+import { Observable, catchError, tap, throwError } from 'rxjs';
+import { SyncSettings } from '../../core/model';
+import { SyncService } from './sync.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
 
 @Component({
   selector: 'esync-sync',
@@ -26,38 +30,72 @@ import { Subscription } from 'rxjs';
     ReactiveFormsModule,
     CheckboxControlComponent,
     SlideToggleControlComponent,
+    MatProgressSpinnerModule,
+    AsyncPipe,
+    NgTemplateOutlet,
   ],
   templateUrl: './sync.component.html',
   styleUrl: './sync.component.scss',
 })
 export class SyncComponent implements OnInit {
-  readonly SYNC_ON = 'Sync on';
-  readonly SYNC_OFF = 'Sync off';
-  toggleText = this.SYNC_ON;
   settingsForm!: FormGroup;
-  syncSub!: Subscription;
+  syncSettings$!: Observable<SyncSettings>;
+  syncSettings!: SyncSettings;
+  hasError = false;
+  loading = false;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private syncService: SyncService,
+  ) {}
 
   ngOnInit(): void {
-    this.settingsForm = this.fb.group({
-      sync: new FormControl(),
-      applyMarkup: new FormControl(),
-      markupPercent: new FormControl(), //add validator required
-      applyMarkdown: new FormControl(),
-      markdownPercent: new FormControl(),
-    });
-    this.settingsForm.disable();
-    this.syncSub = this.settingsForm.controls['sync'].valueChanges.subscribe(
-      () => {
-        this.toggleText =
-          this.toggleText === this.SYNC_OFF ? this.SYNC_ON : this.SYNC_OFF;
-      },
+    this.syncSettings$ = this.syncService.getSyncSettings().pipe(
+      tap((settings) => {
+        this.syncSettings = settings;
+        this.buildForm(settings);
+      }),
+      catchError((e) => {
+        this.hasError = true;
+        return throwError(() => e);
+      }),
     );
   }
 
-  saveSettings(): void {
+  buildForm(syncSettings: SyncSettings): void {
+    this.settingsForm = this.fb.group({
+      sync: new FormControl(syncSettings.sync),
+      applyMarkup: new FormControl(syncSettings.applyMarkup),
+      markupPercent: new FormControl(syncSettings.markupPercent),
+      applyMarkdown: new FormControl(syncSettings.applyMarkdown),
+      markdownPercent: new FormControl(syncSettings.markdownPercent),
+    });
     this.settingsForm.disable();
-    console.log(this.settingsForm.value);
   }
+
+  save(): void {
+    this.loading = true;
+    this.settingsForm.disable();
+    this.syncService
+      .updateSyncSettings(this.settingsForm.value)
+      .pipe(
+        tap(() => {
+          this.loading = false;
+        }),
+        catchError((e) => {
+          this.hasError = true;
+          return throwError(() => e);
+        }),
+      )
+      .subscribe();
+  }
+
+  cancel(): void {
+    this.settingsForm.disable();
+    this.buildForm(this.syncSettings);
+  }
+
+  // ngOnDestroy(): void {
+
+  // }
 }

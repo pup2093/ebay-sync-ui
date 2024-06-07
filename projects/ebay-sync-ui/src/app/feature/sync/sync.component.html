@@ -1,43 +1,59 @@
-<esync-card cardTitle="Sync Settings" cardIcon="sync">
-  <form [formGroup]="settingsForm" class="settings">
-    <esync-slide-toggle-control formControlName="sync">
-      {{ toggleText }}
-    </esync-slide-toggle-control>
-    <esync-checkbox-control #markup formControlName="applyMarkup">
-      Mark up price</esync-checkbox-control
-    >
-    @if (markup.checked) {
-      <mat-form-field
-        class="input-field input-field-dense"
-        appearance="outline"
+@if ((syncSettings$ | async) && !hasError) {
+  <esync-card cardTitle="Sync Settings" cardIcon="sync">
+    <form [formGroup]="settingsForm" class="settings">
+      <esync-slide-toggle-control #toggle formControlName="sync">
+        {{ toggle.checked ? 'Sync on' : 'Sync off' }}
+      </esync-slide-toggle-control>
+      <esync-checkbox-control #markup formControlName="applyMarkup">
+        Mark up price</esync-checkbox-control
       >
-        <input formControlName="markupPercent" matInput type="number" />
-        <span matTextSuffix>%</span>
-      </mat-form-field>
-    }
-    <esync-checkbox-control #markdown formControlName="applyMarkdown">
-      Mark down price</esync-checkbox-control
-    >
-    @if (markdown.checked) {
-      <mat-form-field
-        class="input-field input-field-dense"
-        appearance="outline"
+      @if (markup.checked) {
+        <mat-form-field
+          class="input-field input-field-dense"
+          appearance="outline"
+        >
+          <input formControlName="markupPercent" matInput type="number" />
+          <span matTextSuffix>%</span>
+        </mat-form-field>
+      }
+      <esync-checkbox-control #markdown formControlName="applyMarkdown">
+        Mark down price</esync-checkbox-control
       >
-        <input formControlName="markdownPercent" matInput type="number" />
-        <span matTextSuffix>%</span>
-      </mat-form-field>
-    }
-  </form>
-  <div class="buttons">
-    @if (settingsForm.disabled) {
-      <button mat-raised-button color="primary" (click)="settingsForm.enable()">
-        Edit
-      </button>
-    } @else {
-      <button mat-raised-button color="primary" (click)="saveSettings()">
-        Save
-      </button>
-      <button mat-raised-button (click)="settingsForm.disable()">Cancel</button>
-    }
+      @if (markdown.checked) {
+        <mat-form-field
+          class="input-field input-field-dense"
+          appearance="outline"
+        >
+          <input formControlName="markdownPercent" matInput type="number" />
+          <span matTextSuffix>%</span>
+        </mat-form-field>
+      }
+    </form>
+    <div class="buttons">
+      @if (settingsForm.disabled) {
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="settingsForm.enable()"
+        >
+          Edit
+        </button>
+      } @else {
+        <button mat-raised-button color="primary" (click)="save()">Save</button>
+        <button mat-raised-button (click)="cancel()">Cancel</button>
+      }
+    </div>
+  </esync-card>
+} @else if (!hasError) {
+  <ng-container *ngTemplateOutlet="loading"></ng-container>
+} @else if (hasError) {
+  <ng-container *ngTemplateOutlet="error"></ng-container>
+}
+
+<ng-template #loading>
+  <div class="spinner">
+    <mat-spinner></mat-spinner>
   </div>
-</esync-card>
+</ng-template>
+
+<ng-template #error> Error </ng-template>
