@@ -2,7 +2,7 @@ import {
   Routes,
   provideRouter,
   withComponentInputBinding,
-  withEnabledBlockingInitialNavigation,
+  withDisabledInitialNavigation,
   withInMemoryScrolling,
   withRouterConfig,
 } from '@angular/router';
@@ -26,7 +26,7 @@ export function provideCore({ routes }: CoreOptions) {
         onSameUrlNavigation: 'reload',
       }),
       withComponentInputBinding(),
-      withEnabledBlockingInitialNavigation(),
+      withDisabledInitialNavigation(),
       withInMemoryScrolling({
         anchorScrolling: 'enabled',
         scrollPositionRestoration: 'enabled',

@@ -10,7 +10,9 @@ export const authConfig: AuthConfig = {
   scope: 'openid profile',
 };
 
-export function initializeOauth(oauthService: OAuthService): Promise<boolean> {
+export function initializeOauth(
+  oauthService: OAuthService,
+): Promise<string | boolean> {
   return new Promise((resolve, reject) => {
     oauthService.configure(authConfig);
     oauthService.setupAutomaticSilentRefresh();
@@ -18,7 +20,7 @@ export function initializeOauth(oauthService: OAuthService): Promise<boolean> {
       if (oauthService.hasValidIdToken()) {
         resolve(true);
       } else {
-        reject(false);
+        reject('Not authorized');
       }
     });
   });

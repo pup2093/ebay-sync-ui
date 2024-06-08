@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SetupLayoutComponent } from './setup-layout.component';
 
-describe('MainLayoutComponent', () => {
+describe('SetupLayoutComponent', () => {
   let component: SetupLayoutComponent;
   let fixture: ComponentFixture<SetupLayoutComponent>;
 
