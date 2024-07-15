@@ -13,6 +13,5 @@ export class AppComponent {
 
   constructor(private router: Router) {
     this.router.initialNavigation();
-    this.router.navigateByUrl('/account-setup');
   }
 }

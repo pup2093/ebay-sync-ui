@@ -8,10 +8,15 @@ export const routes: Routes = [
   {
     path: '',
     component: SetupLayoutComponent,
-    canLoad: [setupLayoutGuard()],
     children: [
       {
+        path: '',
+        redirectTo: '/account-setup',
+        pathMatch: 'full',
+      },
+      {
         path: 'account-setup',
+        canMatch: [setupLayoutGuard()],
         loadChildren: () =>
           import('./feature/account-setup/account-setup.routes'),
       },
@@ -19,8 +24,8 @@ export const routes: Routes = [
   },
   {
     path: 'app',
+    canMatch: [mainLayoutGuard()],
     component: MainLayoutComponent,
-    canLoad: [mainLayoutGuard()],
     children: [
       {
         path: 'sync',
@@ -38,4 +43,5 @@ export const routes: Routes = [
       },
     ],
   },
+  { path: '**', redirectTo: '/account-setup', pathMatch: 'full' },
 ];
