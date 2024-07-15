@@ -8,7 +8,7 @@ export const routes: Routes = [
   {
     path: '',
     component: SetupLayoutComponent,
-    canActivate: [setupLayoutGuard()],
+    canLoad: [setupLayoutGuard()],
     children: [
       {
         path: 'account-setup',
@@ -20,7 +20,7 @@ export const routes: Routes = [
   {
     path: 'app',
     component: MainLayoutComponent,
-    canActivate: [mainLayoutGuard()],
+    canLoad: [mainLayoutGuard()],
     children: [
       {
         path: 'sync',

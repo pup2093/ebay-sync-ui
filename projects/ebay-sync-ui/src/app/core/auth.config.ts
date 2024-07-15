@@ -13,6 +13,7 @@ export const authConfig: AuthConfig = {
 export function initializeOauth(
   oauthService: OAuthService,
 ): Promise<string | boolean> {
+  handleEbayAuthRedirect();
   return new Promise((resolve, reject) => {
     oauthService.configure(authConfig);
     oauthService.setupAutomaticSilentRefresh();
@@ -24,4 +25,12 @@ export function initializeOauth(
       }
     });
   });
+}
+
+function handleEbayAuthRedirect() {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('ebay')) {
+    const code = urlParams.get('code');
+    localStorage.setItem('ebay_code', code as string);
+  }
 }

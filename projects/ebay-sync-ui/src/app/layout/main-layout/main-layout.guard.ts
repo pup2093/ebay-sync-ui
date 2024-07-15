@@ -1,9 +1,9 @@
 import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import { CanLoadFn, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { UserInfoService } from '../../core/service/user-info.service';
 
-export function mainLayoutGuard(): CanActivateFn {
+export function mainLayoutGuard(): CanLoadFn {
   return () => {
     const userInfoService = inject(UserInfoService);
     const router = inject(Router);
