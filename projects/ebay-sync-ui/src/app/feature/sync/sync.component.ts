@@ -14,7 +14,7 @@ import { CheckboxControlComponent } from '../../ui/checkbox-control/checkbox-con
 import { SlideToggleControlComponent } from '../../ui/slide-toggle-control/slide-toggle-control.component';
 import { Observable, catchError, tap, throwError } from 'rxjs';
 import { SyncSettings } from '../../core/model';
-import { SyncService } from './sync.service';
+import { SyncService } from '../../core/service/sync.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
 

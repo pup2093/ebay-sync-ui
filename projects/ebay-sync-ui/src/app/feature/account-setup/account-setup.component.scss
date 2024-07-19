@@ -1,5 +1,23 @@
+@import '../../../common';
+
 :host {
   display: block;
-  margin: 20px;
+}
+
+.container {
+  margin: 5% 5%;
+  padding-bottom: 100px;
   height: 100vh;
+}
+
+.spinner {
+  margin-top: 15%;
+}
+
+.save-settings-btn {
+  margin-top: 20px;
+}
+
+.import-btn {
+  margin-top: 20px;
 }

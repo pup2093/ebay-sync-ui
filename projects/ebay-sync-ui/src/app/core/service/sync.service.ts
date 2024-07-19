@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SyncSettings } from '../../core/model';
+import { SyncSettings } from '../model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SyncService {
-  baseUrl = 'http://localhost:8080/api/v1/'; //add to environment later since this will change in prod
+  private baseUrl = 'http://localhost:8080/api/v1/'; //add to environment later since this will change in prod
 
   constructor(private http: HttpClient) {}
 

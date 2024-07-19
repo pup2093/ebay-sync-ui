@@ -1,51 +1,95 @@
-<!-- <a [href]="ebayAuthUrl">Link Ebay Account</a> -->
-<esync-card cardTitle="Account Setup" cardIcon="manage_accounts">
-  <mat-vertical-stepper [linear]="true" #stepper [animationDuration]="'500'">
-    <mat-step [editable]="false" [completed]="isEbayAccountLinkStepComplete">
-      <ng-template matStepLabel>Link Ebay Account</ng-template>
-      <a mat-raised-button color="primary" href="https://www.google.com/"
-        >Link eBay Account</a
-      >
-      <!-- <div>
-        <button mat-button matStepperNext>Next</button>
-      </div> -->
-    </mat-step>
-    <mat-step [editable]="false" [completed]="isSyncSettingsStepComplete">
-      <ng-template matStepLabel>Sync Settings</ng-template>
-      <form [formGroup]="syncSettingsForm" class="settings">
-        <esync-checkbox-control #markup formControlName="applyMarkup">
-          Mark up price</esync-checkbox-control
-        >
-        @if (markup.checked) {
-          <mat-form-field
-            class="input-field input-field-dense"
-            appearance="outline"
-          >
-            <input formControlName="markupPercent" matInput type="number" />
-            <span matTextSuffix>%</span>
-          </mat-form-field>
+@if (!loading) {
+  <esync-card
+    cardTitle="Account Setup"
+    cardIcon="manage_accounts"
+    class="container"
+  >
+    <mat-vertical-stepper
+      [linear]="true"
+      #stepper
+      [animationDuration]="'500'"
+      [selectedIndex]="stepperSelectedIndex"
+    >
+      <mat-step [editable]="false" [completed]="isEbayAccountLinkStepComplete">
+        <ng-template matStepLabel>Link eBay account</ng-template>
+        <a mat-raised-button color="primary" href="">Link eBay Account</a>
+      </mat-step>
+      <mat-step [editable]="false" [completed]="isSyncSettingsStepComplete">
+        <ng-template matStepLabel>Choose sync settings</ng-template>
+        @if (!syncSettingsLoading) {
+          <form [formGroup]="syncSettingsForm" class="settings">
+            <esync-checkbox-control #markup formControlName="applyMarkup">
+              Mark up price</esync-checkbox-control
+            >
+            @if (markup.checked) {
+              <mat-form-field
+                class="input-field input-field-dense"
+                appearance="outline"
+              >
+                <input formControlName="markupPercent" matInput type="number" />
+                <span matTextSuffix>%</span>
+              </mat-form-field>
+            }
+            <esync-checkbox-control #markdown formControlName="applyMarkdown">
+              Mark down price</esync-checkbox-control
+            >
+            @if (markdown.checked) {
+              <mat-form-field
+                class="input-field input-field-dense"
+                appearance="outline"
+              >
+                <input
+                  formControlName="markdownPercent"
+                  matInput
+                  type="number"
+                />
+                <span matTextSuffix>%</span>
+              </mat-form-field>
+            }
+          </form>
+          <div>
+            <button
+              class="save-settings-btn"
+              color="primary"
+              mat-raised-button
+              (click)="saveSyncSettings()"
+            >
+              Save Settings
+            </button>
+          </div>
+        } @else {
+          <mat-spinner></mat-spinner>
         }
-        <esync-checkbox-control #markdown formControlName="applyMarkdown">
-          Mark down price</esync-checkbox-control
-        >
-        @if (markdown.checked) {
-          <mat-form-field
-            class="input-field input-field-dense"
-            appearance="outline"
-          >
-            <input formControlName="markdownPercent" matInput type="number" />
-            <span matTextSuffix>%</span>
-          </mat-form-field>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Import products</ng-template>
+        @if (!importInProgress && !importComplete) {
+          <button color="primary" mat-raised-button (click)="doImport()">
+            Import
+          </button>
+        } @else if (importInProgress && !importComplete) {
+          <p>Import in progress...</p>
+          <mat-progress-bar
+            color="accent"
+            mode="determinate"
+            [value]="importProgressPercent"
+          ></mat-progress-bar>
+        } @else {
+          <p>Import complete!</p>
         }
-      </form>
-    </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      You are now done.
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
-      </div>
-    </mat-step>
-  </mat-vertical-stepper>
-</esync-card>
+      </mat-step>
+
+      <ng-template matStepperIcon="edit">
+        <mat-icon>done</mat-icon>
+      </ng-template>
+    </mat-vertical-stepper>
+  </esync-card>
+} @else {
+  <ng-container *ngTemplateOutlet="loadingTmpl"></ng-container>
+}
+
+<ng-template #loadingTmpl>
+  <div class="spinner center">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

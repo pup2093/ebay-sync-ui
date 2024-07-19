@@ -38,11 +38,13 @@ $ebay-sync-ui-theme: mat.define-light-theme(
 
 /* You can add global styles to this file, and also import other style files */
 
-html,
+//html
+
 body {
   height: 100%;
-  //background-color: mat.get-theme-color($ebay-sync-ui-theme, accent);
-  background-color: #f6f6f7;
+  background-image: url('assets/images/white-background.jpg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 body {
   margin: 0;

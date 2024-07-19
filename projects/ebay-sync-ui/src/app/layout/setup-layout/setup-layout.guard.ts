@@ -10,7 +10,6 @@ export function setupLayoutGuard(): CanMatchFn {
 
     return userInfoService.getUserInfo().pipe(
       map((userInfo) => {
-        console.log('userinfo from setupgruad ');
         if (!userInfo.initiated) {
           return true;
         }
