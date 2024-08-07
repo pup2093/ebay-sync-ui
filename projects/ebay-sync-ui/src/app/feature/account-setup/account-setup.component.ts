@@ -20,8 +20,8 @@ import {
   delay,
   interval,
   of,
+  takeWhile,
   tap,
-  throwError,
 } from 'rxjs';
 import { CardComponent } from '../../ui/card/card.component';
 import { CheckboxControlComponent } from '../../ui/checkbox-control/checkbox-control.component';
@@ -36,6 +36,7 @@ import { LongJobService } from '../../core/service/long-job.service';
 import { LongJobStatus } from '../../core/model/long-job-status';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LongJob } from '../../core/model/long-job';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'esync-account-setup',
@@ -53,6 +54,8 @@ import { LongJob } from '../../core/model/long-job';
     NgTemplateOutlet,
     MatIcon,
     MatProgressBarModule,
+    RouterLink,
+    RouterLinkActive,
   ],
   templateUrl: './account-setup.component.html',
   styleUrl: './account-setup.component.scss',
@@ -93,12 +96,28 @@ export class AccountSetupComponent implements OnInit, OnDestroy {
             this.isEbayAccountLinkStepComplete = true;
             this.stepperSelectedIndex = 1;
             return this.syncService.getSyncSettings().pipe(
-              tap((syncSettings) => {
+              concatMap((syncSettings) => {
                 if (syncSettings) {
                   this.isSyncSettingsStepComplete = true;
                   this.stepperSelectedIndex = 2;
-                  this.loading = false;
-                  return EMPTY;
+                  return this.longJobService.getInProgressJob().pipe(
+                    tap((longJob) => {
+                      if (longJob.status === LongJobStatus.IN_PROGRESS) {
+                        this.importInProgress = true;
+                        this.importComplete = false;
+                        this.pollImportProgress();
+                      }
+                      this.loading = false;
+                    }),
+                    catchError((e) => {
+                      if (e instanceof HttpErrorResponse && e.status === 404) {
+                        console.log('long job not created yet');
+                        this.loading = false;
+                        return EMPTY;
+                      }
+                      throw e;
+                    }),
+                  );
                 } else {
                   this.loading = false;
                   return EMPTY;
@@ -120,8 +139,6 @@ export class AccountSetupComponent implements OnInit, OnDestroy {
         }),
       )
       .subscribe();
-
-    //setInterval(() => { this.importProgressPercent+=5 }, 5000);
   }
 
   handleEbayAccount(): Observable<never> {
@@ -137,14 +154,17 @@ export class AccountSetupComponent implements OnInit, OnDestroy {
               localStorage.removeItem('ebay_code');
               this.isEbayAccountLinkStepComplete = true;
               this.stepperSelectedIndex = 1;
+              this.loading = false;
             }),
             concatMap(() => EMPTY),
             catchError(() => {
               this.hasError = true;
+              this.loading = false;
               return EMPTY;
             }),
           );
         }
+        this.loading = false;
         return EMPTY;
       }),
     );
@@ -190,7 +210,7 @@ export class AccountSetupComponent implements OnInit, OnDestroy {
         // this.pollImportProgress();
       });
 
-    this.importInProgress = true;
+    this.importInProgress = true; //put this back inside subscribe and catch error properly
     this.pollImportProgress();
   }
 
@@ -204,23 +224,29 @@ export class AccountSetupComponent implements OnInit, OnDestroy {
                 console.log('long job not created yet');
                 return of({} as LongJob);
               }
-              return throwError(() => new Error(e));
+              throw e;
             }),
           ),
         ),
         concatMap((longJob) => {
+          //can probably use map instead of concatmap here
           this.importProgressPercent = longJob.progress;
           if (longJob.status === LongJobStatus.COMPLETED) {
             this.importComplete = true;
+            this.importInProgress = false;
             console.log('complete');
           } else if (longJob.status === LongJobStatus.FAILED) {
             this.importComplete = true;
+            this.importInProgress = false;
             console.log('failed');
           } else {
             console.log('in progress');
           }
           return of(longJob);
         }),
+        takeWhile(
+          () => this.importComplete !== true && this.importInProgress !== false,
+        ),
       )
       .subscribe();
   }

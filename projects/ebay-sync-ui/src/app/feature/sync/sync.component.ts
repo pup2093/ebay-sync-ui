@@ -12,7 +12,7 @@ import {
 } from '@angular/forms';
 import { CheckboxControlComponent } from '../../ui/checkbox-control/checkbox-control.component';
 import { SlideToggleControlComponent } from '../../ui/slide-toggle-control/slide-toggle-control.component';
-import { Observable, catchError, tap, throwError } from 'rxjs';
+import { Observable, catchError, tap } from 'rxjs';
 import { SyncSettings } from '../../core/model';
 import { SyncService } from '../../core/service/sync.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -57,7 +57,7 @@ export class SyncComponent implements OnInit {
       }),
       catchError((e) => {
         this.hasError = true;
-        return throwError(() => e);
+        throw e;
       }),
     );
   }
@@ -84,7 +84,7 @@ export class SyncComponent implements OnInit {
         }),
         catchError((e) => {
           this.hasError = true;
-          return throwError(() => e);
+          throw e;
         }),
       )
       .subscribe();

@@ -12,7 +12,9 @@
     >
       <mat-step [editable]="false" [completed]="isEbayAccountLinkStepComplete">
         <ng-template matStepLabel>Link eBay account</ng-template>
-        <a mat-raised-button color="primary" href="">Link eBay Account</a>
+        <a mat-raised-button color="primary" [href]="ebayAuthUrl"
+          >Link eBay Account</a
+        >
       </mat-step>
       <mat-step [editable]="false" [completed]="isSyncSettingsStepComplete">
         <ng-template matStepLabel>Choose sync settings</ng-template>
@@ -74,8 +76,14 @@
             mode="determinate"
             [value]="importProgressPercent"
           ></mat-progress-bar>
+          <p>Feel free to close the browser and check back later.</p>
         } @else {
           <p>Import complete!</p>
+          <a [routerLink]="['app/sync']"
+            ><button color="primary" mat-raised-button>
+              Enter Application
+            </button>
+          </a>
         }
       </mat-step>
 
@@ -89,7 +97,7 @@
 }
 
 <ng-template #loadingTmpl>
-  <div class="spinner center">
+  <div class="spinner center container">
     <mat-spinner></mat-spinner>
   </div>
 </ng-template>
