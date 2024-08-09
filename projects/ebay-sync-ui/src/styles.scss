@@ -45,8 +45,10 @@ body {
   background-image: url('assets/images/white-background.jpg');
   background-size: 100% 100%;
   background-repeat: no-repeat;
-}
-body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.mat-drawer-content::-webkit-scrollbar {
+  display: none;
 }
