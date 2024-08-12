@@ -1,0 +1,4 @@
+export enum ActivityFlow {
+  EBAY_TO_SHOPIFY = 'EBAY_TO_SHOPIFY',
+  SHOPIFY_TO_EBAY = 'SHOPIFY_TO_EBAY',
+}

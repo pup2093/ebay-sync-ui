@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CardComponent } from '../../ui/card/card.component';
 import { Observable, catchError, of, tap } from 'rxjs';
 import { Product } from '../../core/model';
-import { ProductService } from './product.service';
 import {
   AsyncPipe,
   CurrencyPipe,
@@ -13,6 +12,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
+import { ProductService } from '../../core/service/product.service';
 
 @Component({
   selector: 'esync-product-list',
@@ -34,7 +34,7 @@ import { MatIconModule } from '@angular/material/icon';
 export class ProductListComponent implements OnInit {
   productList$!: Observable<Product[]>;
   hasError = false;
-  readonly displayedColumns: string[] = [
+  displayedColumns: string[] = [
     'title',
     'shopifyQuantity',
     'ebayQuantity',

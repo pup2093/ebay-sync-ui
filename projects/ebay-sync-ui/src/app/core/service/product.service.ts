@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Product } from '../model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,5 +14,10 @@ export class ProductService {
   triggerImport(): Observable<void> {
     const url = this.baseUrl + 'product/bulk-import';
     return this.http.get<void>(url);
+  }
+
+  getProducts(): Observable<Product[]> {
+    const url = this.baseUrl + 'product';
+    return this.http.get<Product[]>(url);
   }
 }
