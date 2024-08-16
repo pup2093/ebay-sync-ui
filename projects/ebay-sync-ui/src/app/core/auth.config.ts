@@ -1,9 +1,9 @@
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
+import { environment } from '../../environments/environment';
 
 export const authConfig: AuthConfig = {
-  issuer: 'http://localhost:8081/realms/ebay-sync-dev',
-  tokenEndpoint:
-    'http://localhost:8081/realms/ebay-sync-dev/protocol/openid-connect/token',
+  issuer: environment.authIssuerUrl,
+  tokenEndpoint: environment.authTokenUrl,
   redirectUri: window.location.origin,
   clientId: 'ebay-sync-ui',
   responseType: 'code',
