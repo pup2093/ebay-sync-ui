@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/ebay-sync-ui",
+            "outputPath": "dist",
             "index": "projects/ebay-sync-ui/src/index.html",
             "browser": "projects/ebay-sync-ui/src/main.ts",
             "polyfills": [
